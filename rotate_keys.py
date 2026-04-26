@@ -2,27 +2,29 @@ import os
 import random
 
 def rotate():
-    prefixes = ["ILYAS_KH_YT", "HXA", "HAMZAVIP", "ILYAS_KH_YT_TOP"]
+    prefixes = ["ILYAS_KH_YT", "HXA", "HAMZAVIP", "ILYAS_VIP"]
     
+    # All Keys load karna
     if not os.path.exists("all_keys.txt"): return
-
     with open("all_keys.txt", "r") as f:
-        # Sirf pehli key pick karne ke liye filter
-        keys = [line.strip() for line in f.read().split() if line.strip()]
+        # split() use kiya hai taaki space ya new line ka masla na ho
+        keys = f.read().split()
 
     if not keys: return
 
+    # Index manage karna
     index = 0
     if os.path.exists("index.txt"):
         with open("index.txt", "r") as f:
             index = int(f.read().strip())
 
+    # Key pick karna
     current_key = keys[index % len(keys)]
     chosen_prefix = random.choice(prefixes)
     session_no = f"SN{index+1:02d}"
     
-    # Final Output: Sirf ek prefix aur ek key
-    final_output = f"{chosen_prefix}_{session_no}_{current_key}"
+    # FINAL KEY (Bina kisi extra space ke)
+    final_output = f"{chosen_prefix}_{session_no}_{current_key}".strip()
 
     with open("key.txt", "w") as f:
         f.write(final_output)
