@@ -1,0 +1,22 @@
+name: 12h-Key-Rotation
+on:
+  schedule:
+    - cron: '0 */12 * * *' # Har 12 ghante mein chalega
+  workflow_dispatch: # Taaki hum abhi check kar sakein
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Script
+        run: python rotate_keys.py
+      - name: Save Changes
+        run: |
+          git config --global user.name "Key-Bot"
+          git config --global user.email "bot@github.com"
+          git add .
+          git commit -m "Key Updated"
+          git push
